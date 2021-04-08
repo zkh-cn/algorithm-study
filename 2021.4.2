@@ -1,0 +1,47 @@
+1.LC寻找两个正序数组的中位数
+
+``` 
+给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
+
+示例 1：
+
+输入：nums1 = [1,3], nums2 = [2]
+输出：2.00000
+解释：合并数组 = [1,2,3] ，中位数 2
+```
+
+1.暴力破解法
+
+思路：先将两数组合并，再排序，得到一个新的数组。然后分类讨论，如果为奇数数组，则‘/2’，得到中位数；如果为偶数数组，则‘/2’，得到一个数，然后序号加1，得到后一个数，两数相加再除2，得到中位数。
+
+代码：
+
+```java
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int strLen1=nums1.length;//保存第一个数组长度
+        int strLen2=nums2.length;//保存第二个数组长度
+        nums1= Arrays.copyOf(nums1,strLen1+ strLen2);//扩容
+        System.arraycopy(nums2, 0, nums1, strLen1,strLen2 );//将第二个数组与第一个数组合并
+        
+        Arrays.sort(nums1);
+        if (nums1.length%2 == 1){
+            double median = nums1[nums1.length/2];
+            // System.out.println(median);
+            return median;
+        }else{
+            double median = (double)(nums1[nums1.length/2]+nums1[nums1.length/2-1])/2;
+            // System.out.println(median);
+            return median;
+        }
+        
+    }
+}
+```
+
+难点：
+
+1. 数组合并，通过Arrays.copyof()和System.arraycopy()函数进行合并
+2. 如何保留小数不被整除？在前面加上(double)。
+
+2.二分查找法（不会）
